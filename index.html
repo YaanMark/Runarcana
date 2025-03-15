@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Runarcana RPG</title>
+    <link rel="shortcut icon" href="dice_d_icon_194967.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="top-section">
+            <div class="image-container">
+                <input type="file" id="foto-personagem" accept="image/*" style="display: none;">
+                <div id="imagem-preview" class="imagem-preview"
+                    onclick="document.getElementById('foto-personagem').click();"
+                    style="background-image: url('default-avatar.png');"></div>
+            </div>
+            <input type="text" placeholder="Jogador">
+            <input type="text" placeholder="Personagem">
+            <input type="text" placeholder="Origem">
+            <input type="text" placeholder="Região">
+            <input type="text" placeholder="Passado">
+            <input type="text" placeholder="Moral">
+            <input type="text" placeholder="Classe">
+            <input type="number" placeholder="Nível" id="lvl" onchange="levelChange()">
+        </div>
+    </header>
+
+    <main>
+        <section class="column atributos">
+            <div class="atributos-lista">
+                <table class="table">
+                    <tr>
+                        <th>Atributo</th>
+                        <th>Valor</th>
+                        <th>Modificador</th>
+                    </tr>
+                    <tr>
+                        <td>Força</td>
+                        <td><input type="number" value="10" id="strScore" onchange="updateModfiers()"></td>
+                        <td><input type="number" placeholder="0" id="strMod"></td>
+                    </tr>
+                    <tr>
+                        <td>Destreza</td>
+                        <td><input type="number" value="10" id="dexScore" onchange="updateModfiers()"></td>
+                        <td><input type="number" placeholder="0" id="dexMod"></td>
+                    </tr>
+                    <tr>
+                        <td>Constituição</td>
+                        <td><input type="number" value="10" id="consScore" onchange="updateModfiers()"></td>
+                        <td><input type="number" placeholder="0" id="consMod"></td>
+                    </tr>
+                    <tr>
+                        <td>Inteligência</td>
+                        <td><input type="number" value="10" id="intScore" onchange="updateModfiers()"></td>
+                        <td><input type="number" placeholder="0" id="intMod"></td>
+                    </tr>
+                    <tr>
+                        <td>Sabedoria</td>
+                        <td><input type="number" value="10" id="wisScore" onchange="updateModfiers()"></td>
+                        <td><input type="number" placeholder="0" id="wisMod"></td>
+                    </tr>
+                    <tr>
+                        <td>Carisma</td>
+                        <td><input type="number" value="10" id="charScore" onchange="updateModfiers()"></td>
+                        <td><input type="number" placeholder="0" id="charMod"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>Recursos</h3>
+            <div class="barras-status">
+                <div class="hp">
+                    <span>Vida:</span>
+
+                    <div id="bar-inputs">
+                        <input type="number" id="currenthp" oninput="updateHealthBar()">
+                        <input type="number" id="maxHP" oninput="updateHealthBar()">
+                        <input type="number" id="tempHP" oninput="updateHealthBar()" placeholder="Vida Temp">
+                    </div>
+
+                    <div id="bar">
+                        <button onclick="changeHP(-5)">-5</button>
+                        <button onclick="changeHP(-1)">-1</button>
+                        <div class="health-bar-container">
+                            <div class="temp-health-bar" id="tempHealthBar"></div>
+                            <div class="health-bar" id="healthBar"></div>
+                        </div>
+                        <button onclick="changeHP(1)">+1</button>
+                        <button onclick="changeHP(5)">+5</button>
+                    </div>
+                </div>
+
+                <div class="mana">
+                    <div id="manaHeader">
+                        <span id="manaText">Mana:</span>
+                    </div>
+                    <div id="bar-inputs">
+                        <input type="number" id="currentMana" oninput="updateManaBar()">
+                        <input type="number" id="maxMana" oninput="updateManaBar()">
+                    </div>
+
+                    <div id="bar">
+                        <button onclick="changeMana(-5)">-5</button>
+                        <button onclick="changeMana(-1)">-1</button>
+                        <div class="mana-bar-container">
+                            <div class="mana-bar" id="manaBar" class="isMana"></div>
+                        </div>
+                        <button onclick="changeMana(1)">+1</button>
+                        <button onclick="changeMana(5)">+5</button>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Defesas e Resistências</h3>
+            <div class="defesas">
+                <div class="defesa"><span>Classe de Armadura:</span> <input type="number"></div>
+                <div class="defesa"><span>Percepção Passiva:</span> <input type="number"></div>
+                <div class="defesa"><span>Intuição Passiva:</span> <input type="number"></div>
+                <div class="defesa"><span>Iniciativa:</span> <input type="number"></div>
+                <div class="defesa"><span>Deslocamento:</span> <input type="number"></div>
+                <div class="defesa"><span>Inspiração:</span> <input type="number"></div>
+                <div class="defesa"><span>Bônus de Proficiência:</span> <input type="number" id="prof_bonus"></div>
+            </div>
+            <div id="choose">
+                <div id="choose-ki">
+                    <input type="checkbox" id="isKi" onchange="changeToKi()">
+                    <span>KI</span>
+                </div>
+                <div id="choose-ki">
+                    <input type="checkbox" id="isFury" onchange="changeToFury()">
+                    <span>Ira</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="column skills">
+            <h2>Perícias</h2>
+            <div class="skills_list">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="acroProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="acroSpec" onchange="setSkills()">
+                        </td>
+                        <td>Acrobacia</td>
+                        <td><input type="number" id="acroScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="arcaProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="arcaSpec" onchange="setSkills()">
+                        </td>
+                        <td>Arcanismo</td>
+                        <td><input type="number" id="arcaScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="athlProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="athlSpec" onchange="setSkills()">
+                        </td>
+                        <td>Atletismo</td>
+                        <td><input type="number" id="athlScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="actProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="actSpec" onchange="setSkills()">
+                        </td>
+                        <td>Atuação</td>
+                        <td><input type="number" id="actScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="deceProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="deceSpec" onchange="setSkills()">
+                        </td>
+                        <td>Enganação</td>
+                        <td><input type="number" id="deceScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="steaProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="steaSpec" onchange="setSkills()">
+                        </td>
+                        <td>Furtividade</td>
+                        <td><input type="number" id="steaScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="histProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="histSpec" onchange="setSkills()">
+                        </td>
+                        <td>História</td>
+                        <td><input type="number" id="histScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="intiProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="intiSpec" onchange="setSkills()">
+                        </td>
+                        <td>Intimidação</td>
+                        <td><input type="number" id="intiScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="intuProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="intuSpec" onchange="setSkills()">
+                        </td>
+                        <td>Intuição</td>
+                        <td><input type="number" id="intuScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="invProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="invSpec" onchange="setSkills()">
+                        </td>
+                        <td>Investigação</td>
+                        <td><input type="number" id="invScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="aniProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="aniSpec" onchange="setSkills()">
+                        </td>
+                        <td>Lidar com animais</td>
+                        <td><input type="number" id="aniScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="medProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="medSpec" onchange="setSkills()">
+                        </td>
+                        <td>Medicina</td>
+                        <td><input type="number" id="medScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="natProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="natSpec" onchange="setSkills()">
+                        </td>
+                        <td>Natureza</td>
+                        <td><input type="number" id="natScore"></td onchange="setSkills()">
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="percProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="percSpec" onchange="setSkills()">
+                        </td>
+                        <td>Percepção</td>
+                        <td><input type="number" id="percScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="persProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="persSpec" onchange="setSkills()">
+                        </td>
+                        <td>Persuasão</td>
+                        <td><input type="number" id="persScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="presProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="presSpec" onchange="setSkills()">
+                        </td>
+                        <td>Prestidigitação</td>
+                        <td><input type="number" id="presScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="relProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="relSpec" onchange="setSkills()">
+                        </td>
+                        <td>Religião
+                        </td>
+                        <td><input type="number" id="relScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="survProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="survSpec" onchange="setSkills()">
+                        </td>
+                        <td>Sobrevivência</td>
+                        <td><input type="number" id="survScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="tecProf" onchange="setSkills()">
+                        </td>
+                        <td>
+                            <input type="checkbox" id="tecSpec" onchange="setSkills()">
+                        </td>
+                        <td>Tecnologia</td>
+                        <td><input type="number" id="tecScore"></td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <section class="column abas">
+            <h2>Detalhes</h2>
+            <div class="abas-container">
+                <button class="aba-btn active" data-aba="ataques">Ataques</button>
+                <button class="aba-btn" data-aba="herancas">Heranças e Habilidades</button>
+                <button class="aba-btn" data-aba="magias">Magias</button>
+                <button class="aba-btn" data-aba="pertences">Pertences</button>
+                <button class="aba-btn" data-aba="descricao">Descrição</button>
+            </div>
+            <div class="abas-conteudo">
+                <div class="aba-content active" id="ataques">
+                    <button id="openModal">+</button>
+                    <div id="attackList"></div>
+
+                    <div id="modal" class="modal">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <h2>Novo Ataque</h2>
+                            <form autocomplete="off">
+                                <label for="attackName">Nome*</label>
+                                <input type="text" id="attackName" name="attackName" placeholder="Nome do Ataque">
+
+                                <div class="grid-container">
+                                    <div>
+                                        <label for="dano">Dano*</label>
+                                        <input type="text" id="dano" name="dano" placeholder="1d4">
+                                    </div>
+                                    <div>
+                                        <label for="critico">Crítico*</label>
+                                        <input type="text" id="critico" name="critico" placeholder="20">
+                                    </div>
+                                    <div>
+                                        <label for="multiplicador">Multiplicador*</label>
+                                        <input type="text" id="multiplicador" name="multiplicador" placeholder="2">
+                                    </div>
+                                </div>
+
+                                <label for="anotacoes">Anotações</label>
+                                <textarea id="anotacoes" name="anotacoes"></textarea>
+
+                                <div class="buttons">
+                                    <button type="button" class="cancel">Cancelar</button>
+                                    <button type="submit" class="add">Adicionar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aba-content" id="herancas">
+                    <button id="openSkillModal">+</button>
+                    <div id="skillList"></div>
+
+                    <div id="skillModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <h2>Nova Habilidade</h2>
+                            <form id="skillForm" autocomplete="off">
+
+                                <div class="skill-container">
+                                    <label for="skillName">Nome*</label>
+                                    <input type="text" id="skillName" name="skillName" placeholder="Nome da Habilidade"
+                                        required>
+                                </div>
+
+                                <div class="skill-container-description">
+                                    <label for="skillDescription">Descrição*</label>
+                                    <textarea id="skillDescription" name="skillDescription"
+                                        placeholder="Descreva a habilidade" required></textarea>
+                                </div>
+
+
+
+                                <div class="buttons">
+                                    <button type="button" class="cancel">Cancelar</button>
+                                    <button type="submit" class="add">Adicionar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="aba-content" id="magias">
+                    <button id="openMagicModal" class="add-magic-btn">+</button>
+
+                    <div id="magicList"></div>
+
+                    <div id="magicModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <h2>Nova Magia</h2>
+                            <form id="magicForm" autocomplete="off">
+
+                                <div class="magic-container">
+                                    <label for="magicName">Nome</label>
+                                    <input type="text" id="magicName" name="magicName" placeholder="Nome da Magia"
+                                        required>
+                                </div>
+
+                                <div class="magic-container">
+                                    <label for="magicLevel">Nível</label>
+                                    <input type="number" id="magicLevel" name="magicLevel" placeholder="Nível da Magia"
+                                        required>
+                                </div>
+
+                                <div class="magic-container">
+                                    <label for="magicCastingTime">Conjuração</label>
+                                    <input type="text" id="magicCastingTime" name="magicCastingTime"
+                                        placeholder="Ex: 1 ação" required>
+                                </div>
+
+                                <div class="magic-container">
+                                    <label for="magicComponents">Componentes</label>
+                                    <input type="text" id="magicComponents" name="magicComponents"
+                                        placeholder="V, S, M..." required>
+                                </div>
+
+                                <div class="magic-container">
+                                    <label for="magicDuration">Duração</label>
+                                    <input type="text" id="magicDuration" name="magicDuration"
+                                        placeholder="Ex: 1 minuto" required>
+                                </div>
+
+                                <div class="magic-container-description">
+                                    <label for="magicDescription">Descrição</label>
+                                    <textarea id="magicDescription" name="magicDescription"
+                                        placeholder="Descreva a magia" required></textarea>
+                                </div>
+
+                                <div class="buttons">
+                                    <button type="button" class="cancel">Cancelar</button>
+                                    <button type="submit" class="add">Adicionar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="aba-content" id="pertences">
+                    <textarea id="bag" placeholder="Pertences..."></textarea>
+                </div>
+                <div class="aba-content" id="descricao">
+                    <div id="notes">
+                        <h4>Anotações</h4>
+                        <textarea id="notesArea" placeholder="Anotações pessoais..."></textarea>
+                        <h4>Aparencia</h4>
+                        <textarea id="AppearanceArea" placeholder="Nome, gênero, idade, descrição física..."></textarea>
+                        <h4>Personalidade</h4>
+                        <textarea id="personalityArea" placeholder="Traços marcantes, opiniões, ideias..."></textarea>
+                        <h4>Histórico</h4>
+                        <textarea id="historicArea"
+                            placeholder="Infância, relação com a família, eventos bons e ruins..."></textarea>
+                        <h4>Objetivo</h4>
+                        <textarea id="objectiveArea"
+                            placeholder="Por que ele luta, qual seu objetivo final..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

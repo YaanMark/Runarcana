@@ -1,0 +1,783 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: Poppins, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    background-color: #1e1e1e;
+    border-bottom: 2px solid #333;
+}
+
+button {
+    background: linear-gradient(135deg, #333, #444);
+    border: 1px solid #555;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+    background: linear-gradient(135deg, #444, #555);
+    border-color: #777;
+    transform: scale(1.05);
+}
+
+button:active {
+    background: linear-gradient(135deg, #222, #333);
+    transform: scale(0.95);
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #222;
+    border: 2px solid #555;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+input[type="checkbox"]:hover {
+    border-color: #777;
+}
+
+input[type="checkbox"]:checked {
+    background: linear-gradient(135deg, #333, #444);
+    border-color: #888;
+}
+
+input[type="checkbox"]::after {
+    content: "✔";
+    font-size: 14px;
+    color: white;
+    display: none;
+    position: absolute;
+}
+
+input[type="checkbox"]:checked::after {
+    display: block;
+}
+
+
+.top-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.top-section input {
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.imagem-preview {
+    width: 80px; 
+    height: 80px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid #555;
+    cursor: pointer;
+}
+
+.imagem-preview img {
+    width: 100%;
+    height: auto;
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+input#lvl {
+    border-color: #444;
+}
+
+.table{
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.table th, 
+.table td {
+    padding: 10px;
+    text-align: center;
+}
+
+.column {
+    flex: 1;
+    min-width: 300px;
+    padding: 10px;
+    background: #1e1e1e;
+    border-radius: 8px;
+    margin: 10px;
+}
+
+.atributos-lista, .barras-status, .pericias-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+input, button {
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+button {
+    cursor: pointer;
+}
+
+.abas-container {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.abas-container button {
+    background: #333;
+    border: 1px solid #555;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    width: 50px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #222;
+    color: white;
+}
+
+.barras-status label, .defesas label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.barras-status button, .defesas button {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    min-width: 40px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.barras-status button:hover, .defesas button:hover {
+    background-color: #666;
+}
+
+.atributo, .barras-status div, .defesas div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+table input[type=number] {
+    width: 100%;
+}
+
+.hp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.health-bar-container {
+    width: 100%;
+    height: 20px;
+    min-width: 200px;
+    background-color: #ccc;
+    border-radius: 5px;
+    margin: 5px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.health-bar, .temp-health-bar {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    transition: width 0.3s ease-in-out;
+}
+
+.health-bar {
+    background-color: rgb(113, 0, 0);
+    z-index: 2;
+}
+
+.temp-health-bar {
+    background-color: rgba(16, 137, 0, 0.7);
+    z-index: 1;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 5px;
+}
+
+.buttons-container button {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.hp input[type="number"] {
+    text-align: center;
+    width: 80px;
+}
+
+.barras-status .hp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.barras-status .hp div {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.barras-status .hp div button {
+    padding: 5px;
+    width: 30px;
+}
+
+#bar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.mana {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.mana-bar-container {
+    width: 100%;
+    height: 20px;
+    min-width: 200px;
+    background-color: #ccc;
+    border-radius: 5px;
+    margin: 5px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.mana-bar {
+    height: 100%;
+    background-color: rgb(0, 109, 192);
+    transition: width 0.3s ease-in-out;
+    transform-origin: left center;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.buttons-container button {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.mana input[type="number"] {
+    text-align: center;
+    width: 80px;
+}
+
+.barras-status .mana {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.barras-status .mana {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.barras-status .mana div button {
+    padding: 5px;
+    width: 30px;
+}
+
+.defesas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+}
+
+.defesa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    box-sizing: border-box;
+}
+
+.defesa span {
+    font-weight: 600;
+    color: #ddd;
+}
+
+.defesa input {
+    width: 60px;
+    text-align: center;
+    padding: 5px;
+    background: #333;
+    border: 1px solid #555;
+    color: white;
+    border-radius: 4px;
+    transition: all 0.3s ease-in-out;
+}
+
+.defesa input:focus {
+    border-color: #888;
+    outline: none;
+    background: #444;
+}
+
+#choose-ki {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#choose {
+    display: flex;
+    justify-content: center;
+    margin-right: 20px;
+    margin-left: 10px;
+    gap: 50px;
+}
+
+.aba-content {
+    display: none;
+}
+.aba-content.active {
+    display: block;
+}
+.aba-btn.active {
+    background-color: #444;
+    border-bottom: 2px solid white;
+}
+
+#openModal {
+    font-size: 20px;
+    padding: 12px 24px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    float: right;
+    margin-top: 20px;
+}
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.modal-content {
+    background: #222;
+    padding: 25px;
+    border-radius: 10px;
+    width: 50%;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content input{
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background: #333;
+    color: white;
+    box-sizing: border-box;
+}
+
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.add {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.cancel {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.grid-container input, textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background: #333;
+    color: white;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+.abas-conteudo h4 {
+    margin-bottom: 1px;
+}
+
+.abas-conteudo textarea {
+    width: 100%;
+    min-height: 130px;
+    resize: vertical;
+    background-color: #333;
+    scrollbar-color: #222 #333;
+    color: #ffffff;
+    font-size: 1rem;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+#attackList {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.attack-item {
+    margin: 10px;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.attack-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+}
+
+.attack-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.attack-info {
+    font-size: 14px;
+    color: #bbb;
+}
+
+.toggle-details {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.toggle-details.rotate {
+    transform: rotate(180deg);
+}
+
+.attack-details {
+    display: none;
+    flex-direction: column;
+    margin-top: 10px;
+    padding: 10px;
+    background: #2a2a2a;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #ddd;
+    transition: max-height 0.3s ease-in-out;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+#attackList textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background: #333;
+    color: white;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+#openSkillModal {
+    font-size: 20px;
+    padding: 12px 24px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    float: right;
+    margin-top: 20px;
+}
+
+.skillModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.skill-container {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.skill-container-description {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+#skillList {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.skill-item {
+    margin: 10px;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.skill-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+}
+
+.skill-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.skill-details {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background: #2a2a2a;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #ddd;
+    transition: max-height 0.3s ease-in-out;
+}
+
+#skillList textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background: #333;
+    color: white;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+#openMagicModal {
+    font-size: 20px;
+    padding: 12px 24px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    float: right;
+    margin-top: 20px;
+}
+
+.magicModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.magic-container {
+    gap: 10px;
+    display: flex;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.magic-container input[type=number] {
+    text-align: left;
+}
+
+.magic-container-description {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+#magicList {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.magic-item {
+    margin: 10px;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.magic-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+}
+
+.magic-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.magic-details{
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background: #2a2a2a;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #ddd;
+    transition: max-height 0.3s ease-in-out;
+}
+
+#magicList textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background: #333;
+    color: white;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
